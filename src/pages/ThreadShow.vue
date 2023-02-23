@@ -65,7 +65,6 @@ export default {
   async created () {
     console.log('🛫')
     // fetch the thread
-    debugger
     let thread = await this.$store.dispatch('fetchThread', { id: this.id })
     if (thread === undefined || thread === null) {
       console.log('thread med id:', this.id, ' er undefineds')
@@ -74,7 +73,6 @@ export default {
     // fetch the users associated with the posts
     const users = posts.map(post => post.userId)
     this.$store.dispatch('fetchUsers', { ids: users })
-
   }
 }
 </script>

@@ -8,8 +8,7 @@
 
 <script>
 import ForumList from '@/components/ForumList'
-import {findById} from "@/helpers";
-
+import { findById } from '@/helpers'
 export default {
   components: {
     ForumList
@@ -18,17 +17,21 @@ export default {
     id: {
       required: true,
       type: String
-    },
+    }
   },
   computed: {
     category () {
-      return findById(this.$store.state.categories, this.id)
+      return findById(this.$store.state.categories, this.id) || {}
     }
   },
   methods: {
     getForumsForCategory (category) {
       return this.$store.state.forums.filter(forum => forum.categoryId === category.id)
     }
+  },
+  async created () {
+    const category = await this.$store.dispatch('fetchCategory', { id: this.id })
+    this.$store.dispatch('fetchForums', { ids: category.forums })
   }
 }
 </script>
