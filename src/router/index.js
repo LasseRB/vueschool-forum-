@@ -49,15 +49,17 @@ const routes = [
     {
       let threadExists;
       threadExists = findById(sourceData.threads, to.params.id);
-      if (!threadExists)
+      if (!threadExists) {
+        console.log(to.params.id, 'findes ikke')
         return {
           name: 'NotFound',
           params: {
-            pathMatch : to.path.substring(1).split("/")
+            pathMatch: to.path.substring(1).split("/")
           },
           query: to.query,
           hash: to.hash
         }
+      }
     }
   },
   {

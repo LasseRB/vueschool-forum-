@@ -11,7 +11,7 @@
           <button @click="navigate" class="btn-green btn-small"> Edit Thread</button>
         </router-link>
       <p>
-        By <a href="#" class="link-unstyled">{{thread.author.name}}</a>, <BaseDate :timestamp="thread.publishedAt" />.
+        By <a href="#" class="link-unstyled">{{thread.author?.name}}</a>, <BaseDate :timestamp="thread.publishedAt" />.
         <span
           style="float:right; margin-top: 2px;"
           class="hide-mobile text-faded text-small"
@@ -61,6 +61,20 @@ export default {
       }
       this.$store.dispatch('createPost', post)
     }
+},
+  async created () {
+    console.log('🛫')
+    // fetch the thread
+    debugger
+    let thread = await this.$store.dispatch('fetchThread', { id: this.id })
+    if (thread === undefined || thread === null) {
+      console.log('thread med id:', this.id, ' er undefineds')
+    }
+    const posts = await this.$store.dispatch('fetchPosts', { ids: thread.posts })
+    // fetch the users associated with the posts
+    const users = posts.map(post => post.userId)
+    this.$store.dispatch('fetchUsers', { ids: users })
+
   }
 }
 </script>
