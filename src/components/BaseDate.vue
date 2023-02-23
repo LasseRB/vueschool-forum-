@@ -1,6 +1,6 @@
 <template>
-  <span :title="localTimestamp()">
-    {{fromNowDate()}}
+  <span :title="localTimestamp">
+    {{ fromNowDate }}
   </span>
 </template>
 
@@ -17,19 +17,20 @@ export default {
   props: {
     timestamp: {
       required: true,
-      type: Number
+      type:[Object, Number]
     },
   },
-  methods : {
-    fromNowDate() {
-      return dayjs.unix(this.timestamp).fromNow()
+  computed: {
+    normalizedTimestamp() {
+      return this.timestamp?.seconds || this.timestamp
     },
-
+    fromNowDate() {
+      return dayjs.unix(this.normalizedTimestamp).fromNow()
+    },
     localTimestamp() {
-      return dayjs.unix(this.timestamp).format('llll')
+      return dayjs.unix(this.normalizedTimestamp).format('llll')
     }
   }
-
 }
 </script>
 

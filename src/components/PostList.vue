@@ -26,7 +26,7 @@
       </div>
 
       <div class="post-date text-faded">
-        <AppDate :timestamp="post.publishedAt" />
+        <BaseDate :timestamp="post.publishedAt" />
       </div>
 
     </div>
