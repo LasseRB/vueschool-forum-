@@ -4,10 +4,12 @@ import router from "@/router";
 import store from "@/store"
 import firebase from 'firebase/compat/app'
 import firebaseConfig from '@/config/firebase'
+import FontAwesome from "@/plugins/FontAwesome";
 firebase.initializeApp(firebaseConfig)
 const forumApp = createApp(App)
 forumApp.use(router)
 forumApp.use(store)
+forumApp.use(FontAwesome)
 findAllBaseComponentsAndAdd(forumApp);
 
 forumApp.mount('#app')
