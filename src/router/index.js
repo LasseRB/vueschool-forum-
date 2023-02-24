@@ -5,13 +5,12 @@ import ForumPage from "@/pages/ForumPage.vue";
 import CategoryPage from "@/pages/CategoryPage.vue";
 import ProfilePage from "@/pages/ProfilePage.vue";
 import {createRouter, createWebHistory} from 'vue-router'
-import sourceData from '@/data.json'
 import ThreadCreate from "@/pages/ThreadCreate.vue";
 import ThreadEdit from "@/pages/ThreadEdit.vue";
 import {findById} from "@/helpers";
 import store from "@/store";
 import RegisterUser from "@/components/RegisterUser.vue";
-import SignIn from "@/components/SignIn.vue";
+import SignIn from "@/pages/SignIn.vue";
 
 const routes = [
   {
@@ -22,19 +21,30 @@ const routes = [
   {
     path: '/signin',
     name: 'SignIn',
-    component: SignIn
+    component: SignIn,
+    meta: {requiresGuest: true}
+  },
+  {
+    path: '/logout',
+    name: 'SignOut',
+    async beforeEnter(to, from) {
+      await store.dispatch('signOut')
+      return {name: 'Home'}
+    }
   },
   {
     path: '/me',
     name: 'Profile',
     component: ProfilePage,
-    meta: {toTop: true, smoothScroll: true}
+    meta: {toTop: true, smoothScroll: true, requiresAuth: true},
+
   },
   {
     path: '/me/edit',
     name: 'ProfileEdit',
     component: ProfilePage,
-    props: {edit: true}
+    props: {edit: true},
+    meta: {requiresAuth: true}
   },
   {
     path: '/forum/:id',
@@ -53,39 +63,43 @@ const routes = [
     name: 'ThreadShow',
     component: ThreadShow,
     props: true,
-    // beforeEnter:(to)=>
-    // {
-    //   let threadExists;
-    //   threadExists = findById(this.$store.state.threads, to.params.id);
-    //   if (!threadExists) {
-    //     return {
-    //       name: 'NotFound',
-    //       params: {
-    //         pathMatch: to.path.substring(1).split("/")
-    //       },
-    //       query: to.query,
-    //       hash: to.hash
-    //     }
-    //   }
-    // }
+    beforeEnter: async (to) => {
+      await store.dispatch('fetchThread', {id: to.params.id})
+      let threadExists = findById(store.state.threads, to.params.id);
+      if (!threadExists) {
+        return {
+          name: 'NotFound',
+          params: {
+            pathMatch: to.path.substring(1).split("/")
+          },
+          query: to.query,
+          hash: to.hash
+        }
+      }
+    }
   },
+
   {
     path: '/forum/:forumId/thread/create',
     name: 'ThreadCreate',
     component: ThreadCreate,
-    props: true
+    props: true,
+    meta: {requiresAuth: true}
   },
   {
     path: '/thread/:id/edit',
     name: 'ThreadEdit',
     component: ThreadEdit,
-    props: true
+    props: true,
+    meta: {requiresAuth: true}
   },
   {
     path: '/register',
     name: 'Register',
-    component: RegisterUser
+    component: RegisterUser,
+    meta: {requiresGuest: true}
   },
+
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
@@ -102,8 +116,15 @@ const router = createRouter({
     return scroll
   }
 })
-router.beforeEach(() => {
+router.beforeEach(async (to, from) => {
+  await store.dispatch('initAuthentication')
   store.dispatch('unsubscribeAllSnapshots')
+  if (to.meta.requiresAuth && !store.state.authId) {
+    return { name: 'SignIn', query: { redirectTo: to.path } }
+  }
+  if (to.meta.requiresGuest && store.state.authId) {
+    return { name: 'Home' }
+  }
 })
 
 export default router

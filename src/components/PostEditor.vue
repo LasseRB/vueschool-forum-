@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     save() {
-      this.$emit('save-post', { post: this.postCopy }) // access under eventData.post
+      this.$emit('save', { post: this.postCopy }) // access under eventData.post
       this.postCopy.text = ''
     },
   }
