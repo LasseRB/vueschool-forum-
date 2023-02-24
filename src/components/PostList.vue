@@ -69,7 +69,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updatePost']),
+    ...mapActions(['updatePost', 'fetchUser']),
     userById (userId) {
       return this.$store.getters.user(userId)
     },

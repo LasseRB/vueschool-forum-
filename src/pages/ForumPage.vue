@@ -40,7 +40,8 @@ export default {
     threads () {
       if (!this.forum) return []
       return this.forum.threads.map(threadId => this.$store.getters.thread(threadId))    }
-  }, methods: {
+  },
+  methods: {
     ...mapActions(['fetchForum', 'fetchThreads', 'fetchUsers'])
   },
   mixins: [asyncDataStatus],

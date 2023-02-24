@@ -10,12 +10,19 @@ import ThreadCreate from "@/pages/ThreadCreate.vue";
 import ThreadEdit from "@/pages/ThreadEdit.vue";
 import {findById} from "@/helpers";
 import store from "@/store";
+import RegisterUser from "@/components/RegisterUser.vue";
+import SignIn from "@/components/SignIn.vue";
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/signin',
+    name: 'SignIn',
+    component: SignIn
   },
   {
     path: '/me',
@@ -45,13 +52,12 @@ const routes = [
     path: '/thread/:id',
     name: 'ThreadShow',
     component: ThreadShow,
-    props: true
+    props: true,
     // beforeEnter:(to)=>
     // {
     //   let threadExists;
-    //   threadExists = findById(sourceData.threads, to.params.id);
+    //   threadExists = findById(this.$store.state.threads, to.params.id);
     //   if (!threadExists) {
-    //     console.log(to.params.id, 'findes ikke')
     //     return {
     //       name: 'NotFound',
     //       params: {
@@ -74,6 +80,11 @@ const routes = [
     name: 'ThreadEdit',
     component: ThreadEdit,
     props: true
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterUser
   },
   {
     path: '/:pathMatch(.*)*',

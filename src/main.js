@@ -4,8 +4,16 @@ import router from "@/router";
 import store from "@/store"
 import firebase from 'firebase/compat/app'
 import firebaseConfig from '@/config/firebase'
+import 'firebase/compat/auth'
+
 import FontAwesome from "@/plugins/FontAwesome";
 firebase.initializeApp(firebaseConfig)
+firebase.auth().onAuthStateChanged(user => {
+  store.dispatch('unsubscribeAuthUserSnapshot')
+  if (user) {
+    store.dispatch('fetchAuthUser')
+  }
+})
 const forumApp = createApp(App)
 forumApp.use(router)
 forumApp.use(store)

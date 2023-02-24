@@ -1,43 +1,43 @@
 import {findById} from "@/helpers";
 
-export default  {
+export default {
   authUser: (state, getters) => {
     return getters.user(state.authId)
   },
-    user: state => {
+  user: state => {
     return (id) => {
       const user = findById(state.users, id)
       if (!user) return null
       return {
         ...user,
-        get posts () {
+        get posts() {
           return state.posts.filter(post => post.userId === user.id)
         },
-        get postsCount () {
+        get postsCount() {
           return user.posts?.length || 0
         },
-        get threads () {
+        get threads() {
           return state.threads.filter(post => post.userId === user.id)
         },
-        get threadsCount () {
+        get threadsCount() {
           return user.threads?.length || 0
         }
       }
     }
   },
-    thread: state => {
+  thread: state => {
     return (id) => {
       const thread = findById(state.threads, id)
       if (!thread) return {}
       return {
         ...thread,
-        get author () {
+        get author() {
           return findById(state.users, thread.userId)
         },
-        get repliesCount () {
+        get repliesCount() {
           return thread.posts.length - 1
         },
-        get contributorsCount () {
+        get contributorsCount() {
           return thread.contributors?.length
         }
       }
