@@ -14,7 +14,7 @@ export default {
           return state.posts.filter(post => post.userId === user.id)
         },
         get postsCount() {
-          return user.posts?.length || 0
+          return user.postsCount || 0
         },
         get threads() {
           return state.threads.filter(post => post.userId === user.id)

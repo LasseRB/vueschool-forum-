@@ -113,7 +113,7 @@ export default {
 
   async createUser ({ commit }, { id, email, name, username, avatar = null }) {
     const registeredAt = firebase.firestore.FieldValue.serverTimestamp()
-    const usernameLower = username.toLowerCase()
+    const usernameLower = username.toLƒpoowerCase()
     email = email.toLowerCase()
     const user = { avatar, email, name, username, usernameLower, registeredAt }
     const userRef = await firebase.firestore().collection('users').doc(id)
