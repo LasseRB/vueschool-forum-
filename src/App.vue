@@ -1,36 +1,50 @@
 <template>
-  <TheNavbar />
+  <TheNavbar/>
   <div class="container">
-    <router-view v-show="showPage" @ready="showPage = true"/>
-    <BaseSpinner v-show="!showPage" />
+    <router-view v-show="showPage" @ready="onPageReady"/>
+    <BaseSpinner v-show="!showPage"/>
   </div>
 </template>
 
 <script>
-import TheNavbar from "@/components/TheNavbar.vue";
+import TheNavbar from "@/components/TheNavbar";
 import {mapActions} from "vuex";
-import BaseSpinner from "@/components/BaseSpinner.vue";
+import BaseSpinner from "@/components/BaseSpinner";
+import NProgress from 'nprogress'
 
 export default {
   name: 'App',
-  components: {BaseSpinner, TheNavbar },
+  components: {BaseSpinner, TheNavbar},
   methods: {
-    ...mapActions(['fetchAuthUser'])
+    ...mapActions(['fetchAuthUser']),
+    onPageReady() {
+      this.showPage = true
+      NProgress.done()
+    }
   },
-  data () {
+  data() {
     return {
       showPage: false
     }
   },
-  created () {
+  created() {
     this.fetchAuthUser(),
+    NProgress.configure({
+      speed: 200,
+      showSpinner: false
+    }),
     this.$router.beforeEach(() => {
       this.showPage = false
+      NProgress.start()
     })
   }
 }
 </script>
 
 <style>
-  @import '@/assets/style.css';
+@import '@/assets/style.css';
+@import "~nprogress/nprogress.css";
+#nprogress .bar{
+  background: #57AD8D !important;
+}
 </style>
