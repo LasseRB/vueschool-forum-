@@ -9,7 +9,7 @@ import ThreadCreate from "@/pages/ThreadCreate.vue";
 import ThreadEdit from "@/pages/ThreadEdit.vue";
 import {findById} from "@/helpers";
 import store from "@/store";
-import RegisterUser from "@/components/RegisterUser.vue";
+import RegisterUser from "@/pages/RegisterUser.vue";
 import SignIn from "@/pages/SignIn.vue";
 
 const routes = [
@@ -28,7 +28,7 @@ const routes = [
     path: '/logout',
     name: 'SignOut',
     async beforeEnter(to, from) {
-      await store.dispatch('signOut')
+      await store.dispatch('auth/signOut')
       return {name: 'Home'}
     }
   },
@@ -64,8 +64,9 @@ const routes = [
     component: ThreadShow,
     props: true,
     beforeEnter: async (to) => {
-      await store.dispatch('fetchThread', {id: to.params.id})
-      let threadExists = findById(store.state.threads, to.params.id);
+      await store.dispatch('threads/fetchThread', { id: to.params.id })
+      // check if thread exists
+      const threadExists = findById(store.state.threads.items, to.params.id)
       if (!threadExists) {
         return {
           name: 'NotFound',
@@ -117,8 +118,8 @@ const router = createRouter({
   }
 })
 router.beforeEach(async (to, from) => {
-  await store.dispatch('initAuthentication')
-  store.dispatch('unsubscribeAllSnapshots')
+  await store.dispatch('auth/initAuthentication')
+  store.dispatch('auth/unsubscribeAllSnapshots')
   if (to.meta.requiresAuth && !store.state.authId) {
     return { name: 'SignIn', query: { redirectTo: to.path } }
   }

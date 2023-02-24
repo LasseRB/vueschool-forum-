@@ -18,14 +18,17 @@
       </div>
 
       <div class="post-content">
-        <div>
-          <PostEditor v-if="editing === post.id" :post="post" @save-post="handleUpdate"/>
+        <div class="col-full">
+          <PostEditor
+            v-if="editing === post.id" :post="post"
+            @save="handleUpdate"
+          />
           <p v-else>
             {{post.text}}
           </p>
         </div>
         <a
-          v-if="post.userId === $store.state.authId"
+          v-if="post.userId === $store.state.auth.authId"
           @click.prevent="toggleEditMode(post.id)"
           href="#"
           style="margin-left: auto; padding-left:10px;"
@@ -65,13 +68,13 @@ export default {
   },
   computed: {
     users () {
-      return this.$store.state.users
+      return this.$store.state.users.items
     }
   },
   methods: {
-    ...mapActions(['updatePost', 'fetchUser']),
+    ...mapActions('posts',['updatePost']),
     userById (userId) {
-      return this.$store.getters.user(userId)
+      return this.$store.getters['users/user'](userId)
     },
     toggleEditMode (id) {
       this.editing = id === this.editing ? null : id

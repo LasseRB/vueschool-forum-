@@ -4,8 +4,8 @@
       <div class="form-group">
         <textarea v-model="postCopy.text" cols="30" rows="10" class="form-input"></textarea>
       </div>
-      <div class="form-action">
-        <button class="btn-blue">{{post?.id ? 'Update Post' : 'Submit post'}}</button>
+      <div class="form-actions">
+        <button class="btn-blue">{{post.id ? 'Update Post' : 'Submit post'}}</button>
       </div>
     </form>
   </div>

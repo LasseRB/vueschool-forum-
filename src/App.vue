@@ -16,19 +16,14 @@ export default {
   name: 'App',
   components: {BaseSpinner, TheNavbar},
   methods: {
-    ...mapActions(['fetchAuthUser']),
+    ...mapActions('auth', ['fetchAuthUser']),
     onPageReady() {
       this.showPage = true
       NProgress.done()
     }
   },
-  data() {
-    return {
-      showPage: false
-    }
-  },
-  created() {
-    this.fetchAuthUser(),
+  created () {
+    this.fetchAuthUser()
     NProgress.configure({
       speed: 200,
       showSpinner: false

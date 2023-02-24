@@ -1,5 +1,5 @@
 <template>
-  <div v-if="asyncDataStatus_ready" className="col-full push-top">
+  <div v-if="asyncDataStatus_ready" class="col-full push-top">
     <h1>
       Create new thread in <i>{{ forum.name }}</i>
     </h1>
@@ -21,7 +21,7 @@ export default {
   mixins: [asyncDataStatus],
   computed: {
     forum() {
-      return findById(this.$store.state.forums, this.forumId)
+      return findById(this.$store.state.forums.items, this.forumId)
     }
   },
   data () {
@@ -30,7 +30,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchForum', 'createThread']),
+    ...mapActions('forums',['fetchForum']),
+    ...mapActions('threads',['createThread']),
+
     async save ({ title, text }) {
       const thread = await this.createThread({
         forumId: this.forum.id,

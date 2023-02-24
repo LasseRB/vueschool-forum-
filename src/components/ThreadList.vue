@@ -1,5 +1,5 @@
 <template>
-  <div v-if="threads"  class="col-full">
+  <div class="col-full">
     <div class="thread-list">
 
       <h2 class="list-title">Threads</h2>
@@ -7,10 +7,14 @@
       <div v-for="thread in threads" :key="thread.id" class="thread">
         <div>
           <p>
-            <router-link v-if="thread.id" :to="{name: 'ThreadShow', params: {id: thread.id}}">{{thread.title}}</router-link>
+            <router-link v-if="thread.id" :to="{name: 'ThreadShow', params: {id: thread.id}}">
+              {{ thread.title }}
+            </router-link>
           </p>
           <p class="text-faded text-xsmall">
-            By <a href="#">{{ userById(thread.userId).name }}</a>, <AppDate :timestamp="thread.publishedAt" />.
+            By <a href="#">{{ userById(thread.userId).name }}</a>,
+            <BaseDate :timestamp="thread.publishedAt"/>
+            .
           </p>
         </div>
 
@@ -25,7 +29,9 @@
             <p class="text-xsmall">
               <a href="#">{{ userById(thread.userId).name }}</a>
             </p>
-            <p class="text-xsmall text-faded"><AppDate :timestamp="thread.publishedAt" /></p>
+            <p class="text-xsmall text-faded">
+              <BaseDate :timestamp="thread.publishedAt"/>
+            </p>
           </div>
         </div>
       </div>
@@ -35,7 +41,8 @@
 </template>
 
 <script>
-import { findById } from '@/helpers'
+import {findById} from '@/helpers'
+
 export default {
   props: {
     threads: {
@@ -44,13 +51,19 @@ export default {
     }
   },
   computed: {
-    users () {
-      return this.$store.state.users
-    }
+    posts() {
+      return this.$store.state.posts.items
+    },
+    users() {
+      return this.$store.state.users.items
+    },
   },
   methods: {
+    postById (postId) {
+      return findById(this.posts.items, postId)
+    },
     userById (userId) {
-      return findById(this.users, userId) || {}
+      return findById(this.users.items, userId) || {}
     }
   }
 }

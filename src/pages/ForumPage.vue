@@ -35,21 +35,25 @@ export default {
   },
   computed: {
     forum () {
-      return findById(this.$store.state.forums, this.id)
+      return findById(this.$store.state.forums.items, this.id)
     },
     threads () {
       if (!this.forum) return []
-      return this.forum.threads.map(threadId => this.$store.getters.thread(threadId))    }
+      return this.forum.threads.map(threadId => this.$store.getters['threads/thread'](threadId))
+    }
   },
   methods: {
-    ...mapActions(['fetchForum', 'fetchThreads', 'fetchUsers'])
+    ...mapActions('forums', ['fetchForum']),
+    ...mapActions('threads', ['fetchThreads']),
+    ...mapActions('users', ['fetchUsers'])
   },
   mixins: [asyncDataStatus],
   async created () {
-      const forum = await this.fetchForum({ id: this.id })
-      const threads = await this.fetchThreads({ ids: forum.threads })
-      await this.fetchUsers({ ids: threads.map(thread => thread.userId) })
-      this.asyncDataStatus_fetched()
+    debugger
+    const forum = await this.fetchForum({ id: this.id })
+    const threads = await this.fetchThreads({ ids: forum.threads })
+    await this.fetchUsers({ ids: threads.map(thread => thread.userId) })
+    this.asyncDataStatus_fetched()
   }
 }
 </script>
