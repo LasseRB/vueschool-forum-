@@ -48,7 +48,7 @@ export default {
       const forum = await this.fetchForum({ id: this.id })
       const threads = await this.fetchThreads({ ids: forum.threads })
       await this.fetchUsers({ ids: threads.map(thread => thread.userId) })
-    this.asyncDataStatus_fetched()
+      this.asyncDataStatus_fetched()
   }
 }
 </script>
