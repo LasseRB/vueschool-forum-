@@ -1,15 +1,15 @@
 module.exports = {
 
-  apiKey: "AIzaSyDd56Pml6_6EHDxNGrruWH6hUp6iuSyMDo",
+  apiKey: VUE_APP_FIREBASE_API_KEY,
 
-  authDomain: "vuescool-forum.firebaseapp.com",
+  authDomain: VUE_APP_FIREBASE_AUTH_DOMAIN,
 
-  projectId: "vuescool-forum",
+  projectId: VUE_APP_FIREBASE_PROJECT_ID,
 
-  storageBucket: "vuescool-forum.appspot.com",
+  storageBucket: VUE_APP_FIREBASE_STORAGE_BUCKET,
 
-  messagingSenderId: "833496554143",
+  messagingSenderId: VUE_APP_FIREBASE_MESSAGE_SENDER_ID,
 
-  appId: "1:833496554143:web:34f3ca87ed59f85f53e0aa"
+  appId:VUE_APP_FIREBASE_APP_ID
 
 }
