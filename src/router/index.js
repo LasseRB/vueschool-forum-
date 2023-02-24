@@ -9,6 +9,7 @@ import sourceData from '@/data.json'
 import ThreadCreate from "@/pages/ThreadCreate.vue";
 import ThreadEdit from "@/pages/ThreadEdit.vue";
 import {findById} from "@/helpers";
+import store from "@/store";
 
 const routes = [
   {
@@ -20,7 +21,7 @@ const routes = [
     path: '/me',
     name: 'Profile',
     component: ProfilePage,
-    meta: { toTop: true, smoothScroll: true }
+    meta: {toTop: true, smoothScroll: true}
   },
   {
     path: '/me/edit',
@@ -80,7 +81,7 @@ const routes = [
     component: NotFound
   }
 ]
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to) {
@@ -90,3 +91,8 @@ export default createRouter({
     return scroll
   }
 })
+router.beforeEach(() => {
+  store.dispatch('unsubscribeAllSnapshots')
+})
+
+export default router
