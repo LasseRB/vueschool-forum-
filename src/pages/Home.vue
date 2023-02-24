@@ -1,29 +1,33 @@
 <template>
- <h1 class="push-top">Welcome to the vueschool forums!🍼</h1>
-  <CategoryList :categories="categories"/>
+  <div v-if="asyncDataStatus_ready" class="col-full">
+    <h1 class="push-top">Welcome to the vueschool forums!🍼</h1>
+    <CategoryList :categories="categories"/>
+  </div>
 </template>
 
 <script>
 
 import CategoryList from "@/components/CategoryList.vue";
 import {mapActions} from "vuex";
+import asyncDataStatus from "@/mixins/AsyncDataStatus";
 
 export default {
   name: 'PageHome',
   components: {CategoryList},
+  mixins: [asyncDataStatus],
   computed: {
-      categories() {
-        return this.$store.state.categories
-      }
+    categories() {
+      return this.$store.state.categories
+    }
   },
   methods: {
     ...mapActions(['fetchAllCategories', 'fetchForums'])
   },
-  async created () {
+  async created() {
     const categories = await this.fetchAllCategories()
     const forumIds = categories.map(category => category.forums).flat()
-    this.fetchForums({ ids: forumIds })
-    console.log('before create', this.categories)
+    await this.fetchForums({ids: forumIds})
+    this.asyncDataStatus_fetched()
   }
 }
 </script>
