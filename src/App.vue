@@ -9,12 +9,16 @@
 <script>
 import TheNavbar from "@/components/TheNavbar";
 import {mapActions} from "vuex";
-import BaseSpinner from "@/components/BaseSpinner";
 import NProgress from 'nprogress'
 
 export default {
   name: 'App',
-  components: {BaseSpinner, TheNavbar},
+  components: { TheNavbar },
+  data () {
+    return {
+      showPage: false
+    }
+  },
   methods: {
     ...mapActions('auth', ['fetchAuthUser']),
     onPageReady() {

@@ -22,7 +22,6 @@ export default {
         firebase.firestore().collection('categories').onSnapshot((querySnapshot) => {
           const categories = querySnapshot.docs.map(doc => {
             const item = { id: doc.id, ...doc.data() }
-            debugger;
             commit('setItem', { resource: 'categories', item }, { root: true })
             return item
           })

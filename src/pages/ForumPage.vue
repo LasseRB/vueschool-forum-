@@ -23,7 +23,7 @@
 import ThreadList from '@/components/ThreadList'
 import {findById} from "@/helpers";
 import {mapActions} from "vuex";
-import asyncDataStatus from "@/mixins/AsyncDataStatus";
+import AsyncDataStatus from "@/mixins/AsyncDataStatus";
 
 export default {
   components: { ThreadList },
@@ -47,7 +47,7 @@ export default {
     ...mapActions('threads', ['fetchThreads']),
     ...mapActions('users', ['fetchUsers'])
   },
-  mixins: [asyncDataStatus],
+  mixins: [AsyncDataStatus],
   async created () {
     debugger
     const forum = await this.fetchForum({ id: this.id })

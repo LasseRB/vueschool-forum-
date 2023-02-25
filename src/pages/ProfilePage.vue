@@ -23,10 +23,10 @@ import PostList from '@/components/PostList'
 import UserProfileCard from '@/components/UserProfileCard'
 import UserProfileCardEditor from '@/components/UserProfileCardEditor'
 import { mapGetters } from 'vuex'
-import asyncDataStatus from '@/mixins/AsyncDataStatus'
+import AsyncDataStatus from "@/mixins/AsyncDataStatus";
 export default {
   components: { PostList, UserProfileCard, UserProfileCardEditor },
-  mixins: [asyncDataStatus],
+  mixins: [AsyncDataStatus],
   props: {
     edit: {type: Boolean, default: false}
   },

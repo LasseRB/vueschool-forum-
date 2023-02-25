@@ -12,7 +12,7 @@
 import ForumList from '@/components/ForumList'
 import { findById } from '@/helpers'
 import {mapActions} from "vuex";
-import asyncDataStatus from "@/mixins/AsyncDataStatus";
+import AsyncDataStatus from "@/mixins/AsyncDataStatus";
 export default {
   components: {
     ForumList
@@ -23,7 +23,7 @@ export default {
       type: String
     }
   },
-  mixins: [asyncDataStatus],
+  mixins: [AsyncDataStatus],
   computed: {
     category () {
       return findById(this.$store.state.categories.items, this.id) || {}

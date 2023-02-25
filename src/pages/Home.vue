@@ -9,12 +9,12 @@
 
 import CategoryList from "@/components/CategoryList";
 import {mapActions} from "vuex";
-import asyncDataStatus from "@/mixins/AsyncDataStatus";
+import AsyncDataStatus from "@/mixins/AsyncDataStatus";
 
 export default {
   name: 'PageHome',
   components: {CategoryList},
-  mixins: [asyncDataStatus],
+  mixins: [AsyncDataStatus],
   computed: {
     categories() {
       return this.$store.state.categories.items
