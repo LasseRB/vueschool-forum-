@@ -19,7 +19,7 @@
         >{{thread.repliesCount}} replies by {{thread.contributorsCount}} contributors</span
         >
       </p>
-      <PostList :posts="threadPost"/>
+      <PostList :posts="threadPosts"/>
       <PostEditor v-if="authUser" @save="addPost" />
       <div v-else class="text-center" style="margin-bottom: 50px;">
         <router-link :to="{name: 'SignIn', query:{redirectTo: $route.path}}">Sign In</router-link> or <router-link :to="{name: 'Register',  query:{redirectTo: $route.path}}">Register</router-link> to reply.

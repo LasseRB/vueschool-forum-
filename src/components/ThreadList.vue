@@ -60,10 +60,10 @@ export default {
   },
   methods: {
     postById (postId) {
-      return findById(this.posts.items, postId)
+      return findById(this.posts, postId)
     },
     userById (userId) {
-      return findById(this.users.items, userId) || {}
+      return findById(this.users, userId) || {}
     }
   }
 }
