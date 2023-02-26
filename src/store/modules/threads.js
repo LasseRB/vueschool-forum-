@@ -1,4 +1,9 @@
-import { findById, docToResource, makeAppendChildToParentMutation } from '@/helpers'
+import {
+  findById,
+  docToResource,
+  makeAppendChildToParentMutation,
+  makeFetchItemAction, makeFetchItemsAction
+} from '@/helpers'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -76,8 +81,8 @@ export default {
       commit('setItem', { resource: 'posts', item: newPost }, { root: true })
       return docToResource(newThread)
     },
-    fetchThread: ({ dispatch }, { id }) => dispatch('fetchItem', { emoji: '📄', resource: 'threads', id }, { root: true }),
-    fetchThreads: ({ dispatch }, { ids }) => dispatch('fetchItems', { resource: 'threads', ids, emoji: '📄' }, { root: true }),
+    fetchThread: makeFetchItemAction({ emoji: '📄', resource: 'threads' }),
+    fetchThreads: makeFetchItemsAction({ emoji: '📄', resource: 'threads' }),
     fetchThreadsByPage: ({ dispatch, commit }, { ids, page, perPage = 5 }) => {
       commit('clearThreads')
       const chunks = chunk(ids, perPage)
