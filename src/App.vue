@@ -1,7 +1,7 @@
 <template>
   <TheNavbar/>
   <div class="container">
-    <router-view v-show="showPage" @ready="onPageReady" :key="$route.path"/>
+    <router-view v-show="showPage" @ready="onPageReady" :key="`${$route.path}${JSON.stringify($route.query)}`"/>
     <BaseSpinner v-show="!showPage"/>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
     NProgress.configure({
       speed: 200,
       showSpinner: false
-    }),
+    })
     this.$router.beforeEach(() => {
       this.showPage = false
       NProgress.start()

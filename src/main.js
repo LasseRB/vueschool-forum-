@@ -5,7 +5,7 @@ import store from "@/store"
 import firebase from 'firebase/compat/app'
 import firebaseConfig from '@/config/firebase'
 import 'firebase/compat/auth'
-
+import Vue3Pagination from '@/plugins/Vue3Pagination'
 import FontAwesome from "@/plugins/FontAwesome";
 import ClickOutsideDirective from "@/plugins/ClickOutsideDirective";
 import PageScrollDirective from "@/plugins/PageScrollDirective";
@@ -17,6 +17,7 @@ forumApp.use(store)
 forumApp.use(FontAwesome)
 forumApp.use(ClickOutsideDirective)
 forumApp.use(PageScrollDirective)
+forumApp.use(Vue3Pagination)
 findAllBaseComponentsAndAdd(forumApp);
 
 forumApp.mount('#app')
