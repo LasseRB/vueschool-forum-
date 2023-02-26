@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "db:seed" : "firebase firestore:delete --all-collections --yes && node firestoreImport"
+    "db:seed": "firebase firestore:delete --all-collections --yes && node firestoreImport"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -16,6 +16,7 @@
     "dayjs": "^1.11.7",
     "firebase": "^9.17.1",
     "firestore-export-import": "^1.3.5",
+    "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6",

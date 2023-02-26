@@ -120,10 +120,10 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   await store.dispatch('auth/initAuthentication')
   store.dispatch('unsubscribeAllSnapshots')
-  if (to.meta.requiresAuth && !store.state.authId) {
+  if (to.meta.requiresAuth && !store.state.auth.authId) {
     return { name: 'SignIn', query: { redirectTo: to.path } }
   }
-  if (to.meta.requiresGuest && store.state.authId) {
+  if (to.meta.requiresGuest && store.state.auth.authId) {
     return { name: 'Home' }
   }
 })
