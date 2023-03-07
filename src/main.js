@@ -12,8 +12,8 @@ import PageScrollDirective from "@/plugins/PageScrollDirective";
 firebase.initializeApp(firebaseConfig)
 
 const forumApp = createApp(App)
-forumApp.use(router)
 forumApp.use(store)
+forumApp.use(router)
 forumApp.use(FontAwesome)
 forumApp.use(ClickOutsideDirective)
 forumApp.use(PageScrollDirective)
