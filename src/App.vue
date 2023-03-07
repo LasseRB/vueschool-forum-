@@ -3,6 +3,7 @@
   <div class="container">
     <router-view v-show="showPage" @ready="onPageReady" :key="`${$route.path}${JSON.stringify($route.query)}`"/>
     <BaseSpinner v-show="!showPage"/>
+    <BaseNotifications />
   </div>
 </template>
 
@@ -10,10 +11,11 @@
 import TheNavbar from "@/components/TheNavbar";
 import {mapActions} from "vuex";
 import NProgress from 'nprogress'
+import BaseNotifications from "@/components/BaseNotifications.vue";
 
 export default {
   name: 'App',
-  components: { TheNavbar },
+  components: {BaseNotifications, TheNavbar },
   data () {
     return {
       showPage: false
