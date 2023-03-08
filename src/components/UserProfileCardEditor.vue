@@ -1,20 +1,20 @@
 <template>
   <div class="profile-card">
     <form @submit.prevent="save">
-      <p class="text-center avatar-edit">
-        <label for="avatar">
-          <img
+      <div class="text-center avatar-edit">
+        <label for="avatar" >
+          <BaseAvatarImage
             :src="activeUser.avatar"
             :alt="`${activeUser.name} profile picture`"
             class="avatar-xlarge img-update"
           />
           <div class="avatar-upload-overlay">
             <BaseSpinner v-if="uploadingImage" color="white" />
-            <fa v-else icon="camera" size="3x" :style="{color: 'white', opacity: '8'}" />
+            <fa v-else icon="camera" size="3x" :style="{color: 'white', opacity: '.8'}" />
           </div>
           <input v-show="false" type="file" id="avatar" accept="image/*" @change="handleAvatarUpload" />
         </label>
-      </p>
+      </div>
 
       <div class="form-group">
         <input
@@ -112,7 +112,8 @@ export default {
     async handleAvatarUpload(e) {
       this.uploadingImage = true
       const file = e.target.files[0]
-      this.activeUser.avatar = await this.uploadAvatar({file})
+      const uploadedImage = await this.uploadAvatar({file})
+      this.activeUser.avatar = uploadedImage || this.activeUser.avatar
       this.uploadingImage = false
     },
     save() {

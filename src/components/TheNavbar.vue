@@ -18,7 +18,7 @@
         <li v-if="authUser" class="navbar-user">
           <a @click.prevent="userDropdownOpen = !userDropdownOpen"
              v-click-outside="()=> userDropdownOpen = false">
-            <img class="avatar-small" :src="authUser.avatar"
+            <BaseAvatarImage class="avatar-small" :src="authUser.avatar"
                  :alt="`${authUser.name} profile picture`"/>
             <span>
                 {{ authUser.name }}

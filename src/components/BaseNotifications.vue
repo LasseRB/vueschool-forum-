@@ -3,6 +3,7 @@
     <transition-group name="notification">
       <div
         class="notification"
+        :class="`notification-type-${notification.type}`"
         v-for="notification in notifications"
         :key="notification.id"
       >
@@ -38,6 +39,11 @@ export default {
   padding: 10px 20px;
   margin-bottom: 5px;
   border-left: 5px solid #263959;
+}
+.notification.notification-type-error{
+  border-left: 5px solid rgb(146, 5, 5);
+  background-color: #f4d3d9;
+  color: darkred;
 }
 .notification-enter-active,
 .notification-leave-active {

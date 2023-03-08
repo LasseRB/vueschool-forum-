@@ -9,7 +9,7 @@
         <a href="#" class="user-name">{{userById(post.userId).name}}</a>
 
         <a href="#">
-          <img class="avatar-large" :src="userById(post.userId).avatar" alt="">
+          <BaseAvatarImage class="avatar-large" :src="userById(post.userId).avatar" />
         </a>
 
         <p class="desktop-only text-small">{{userById(post.userId).postsCount}} posts</p>
@@ -52,9 +52,10 @@
 <script>
 import PostEditor from "@/components/PostEditor.vue";
 import {mapActions} from "vuex";
+import BaseAvatarImage from "@/components/BaseAvatarImage.vue";
 
 export default {
-  components: {PostEditor},
+  components: {BaseAvatarImage, PostEditor},
   props: {
     posts: {
       required: true,

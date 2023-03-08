@@ -2,7 +2,7 @@
   <div class="profile-card">
 
     <p class="text-center">
-      <img
+      <BaseAvatarImage
         :src="user.avatar"
         :alt="`${user.name} profile picture`"
         class="avatar-xlarge"
