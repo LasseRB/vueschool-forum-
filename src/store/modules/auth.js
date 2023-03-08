@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/storage'
 export default {
   namespaced: true,
   state: {
@@ -32,6 +33,7 @@ export default {
     },
     async registerUserWithEmailAndPassword ({ dispatch }, { avatar = null, email, name, username, password }) {
       const result = await firebase.auth().createUserWithEmailAndPassword(email, password)
+      avatar = await dispatch('uploadAvatar', { authId: result.user.uid, file: avatar })
       await dispatch('users/createUser', { id: result.user.uid, email, name, username, avatar }, { root: true })
     },
     signInWithEmailAndPassword (context, { email, password }) {
@@ -49,6 +51,14 @@ export default {
           { root: true }
         )
       }
+    },
+    async uploadAvatar ({ state }, { authId, file }) {
+      if (!file) return null
+      authId = authId || state.authId
+      const storageBucket = firebase.storage().ref().child(`uploads/${authId}/images/${Date.now()}-${file.name}`)
+      const snapshot = await storageBucket.put(file)
+      const url = await snapshot.ref.getDownloadURL()
+      return url
     },
     async signOut ({ commit }) {
       await firebase.auth().signOut()

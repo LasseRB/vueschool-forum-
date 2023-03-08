@@ -1,12 +1,19 @@
 <template>
   <div class="profile-card">
     <form @submit.prevent="save">
-      <p class="text-center">
-        <img
-          :src="user.avatar"
-          :alt="`${user.name} profile picture`"
-          class="avatar-xlarge img-update"
-        />
+      <p class="text-center avatar-edit">
+        <label for="avatar">
+          <img
+            :src="activeUser.avatar"
+            :alt="`${activeUser.name} profile picture`"
+            class="avatar-xlarge img-update"
+          />
+          <div class="avatar-upload-overlay">
+            <BaseSpinner v-if="uploadingImage" color="white" />
+            <fa v-else icon="camera" size="3x" :style="{color: 'white', opacity: '8'}" />
+          </div>
+          <input v-show="false" type="file" id="avatar" accept="image/*" @change="handleAvatarUpload" />
+        </label>
       </p>
 
       <div class="form-group">
@@ -42,7 +49,7 @@
         <span>{{ user.threadsCount }} threads</span>
       </div>
 
-      <hr />
+      <hr/>
 
       <div class="form-group">
         <label class="form-label" for="user_website">Website</label>
@@ -75,7 +82,7 @@
       </div>
 
       <div class="btn-group space-between">
-        <button class="btn-ghost" @click="cancel">Cancel</button>
+        <button class="btn-ghost" @click.prevent="cancel">Cancel</button>
         <button type="submit" class="btn-blue">Save</button>
       </div>
     </form>
@@ -83,25 +90,37 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+import BaseSpinner from "@/components/BaseSpinner.vue";
+
 export default {
+  components: {BaseSpinner},
   props: {
     user: {
       type: Object,
       required: true
     }
   },
-  data () {
+  data() {
     return {
-      activeUser: { ...this.user }
+      uploadingImage: false,
+      activeUser: {...this.user}
     }
   },
   methods: {
-    save () {
-      this.$store.dispatch('users/updateUser', { ...this.activeUser })
-      this.$router.push({ name: 'Profile' })
+    ...mapActions('auth', ['uploadAvatar']),
+    async handleAvatarUpload(e) {
+      this.uploadingImage = true
+      const file = e.target.files[0]
+      this.activeUser.avatar = await this.uploadAvatar({file})
+      this.uploadingImage = false
     },
-    cancel () {
-      this.$router.push({ name: 'Profile' })
+    save() {
+      this.$store.dispatch('users/updateUser', {...this.activeUser})
+      this.$router.push({name: 'Profile'})
+    },
+    cancel() {
+      this.$router.push({name: 'Profile'})
     }
 
   }

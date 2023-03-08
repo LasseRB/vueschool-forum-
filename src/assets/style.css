@@ -919,7 +919,7 @@ ul {
 
 .navbar {
     width: 100%;
-    display:flex;
+    display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
 }
@@ -2543,10 +2543,23 @@ hr {
     background: #F5F8FE;
     min-height: 100vh;
 }
-.Pagination{
+
+.Pagination {
     justify-content: center;
     margin: 40px !important;
 }
-.Pagination .Page-active{
-    color:white;
+
+.Pagination .Page-active {
+    color: white;
+}
+
+.avatar-edit {
+    position: relative;
+}
+
+.avatar-edit .avatar-upload-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -35,7 +35,7 @@
                 <router-link :to="{name: 'Profile'}">View profile</router-link>
               </li>
               <li class="dropdown-menu-item">
-                <a @click.prevent="$store.dispatch('auth/signOut'), $router.push({name: 'Home'})">">Sign Out</a>
+                <a @click.prevent="$store.dispatch('auth/signOut'), $router.push({name: 'Home'})">Sign Out</a>
               </li>
             </ul>
           </div>
